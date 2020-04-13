@@ -2,9 +2,6 @@ import Vapor
 
 /// Register your application's routes here.
 public func routes(_ router: Router) throws {
-    let colors = ["#f5af10", "#4d9dff", "#dabaff", "#fe806f", "#292a30", "#6e7883", "#ff8170", "#1d2022", "#1c4877", "#007aff"]
-    let color = Constants.isMulticolored ? colors.random! : colors.first!
-
     router.get { _ in
         return "Battlesnake"
     }
@@ -13,7 +10,10 @@ public func routes(_ router: Router) throws {
         return "pong\n"
     }
 
-    router.post("/start") { _ in
+    router.post("/start") { _ -> String in
+        let colors = ["#f5af10", "#4d9dff", "#dabaff", "#fe806f", "#292a30", "#6e7883", "#ff8170", "#1d2022", "#1c4877", "#007aff"]
+        let color = Constants.isMulticolored ? colors.random! : colors.first!
+        
         return """
 {
         "color": "\(color)",
@@ -125,6 +125,7 @@ public func routes(_ router: Router) throws {
         
         // avoid self
         // avoid walls
+        // cut off other snakes
         // eat shorter adjacent snakes
         // avoid other snakes
         // avoid deadends (A*?)
