@@ -31,7 +31,7 @@ public func routes(_ router: Router) throws {
     router.post("/start") { _ in
         return """
 {
-        "color": "\(colors.random!)",
+        "color": "\(color)",
     "headType": "silly",
     "tailType": "bolt"
 }
