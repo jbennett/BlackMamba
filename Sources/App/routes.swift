@@ -2,23 +2,8 @@ import Vapor
 
 /// Register your application's routes here.
 public func routes(_ router: Router) throws {
-//    // Basic "It works" example
-//    router.get { req in
-//        return "It works!"
-//    }
-//
-//    // Basic "Hello, world!" example
-//    router.get("hello") { req in
-//        return "Hello, world!"
-//    }
-//
-//    // Example of configuring a controller
-//    let todoController = TodoController()
-//    router.get("todos", use: todoController.index)
-//    router.post("todos", use: todoController.create)
-//    router.delete("todos", Todo.parameter, use: todoController.delete)
-    
     let colors = ["#f5af10", "#4d9dff", "#dabaff", "#fe806f", "#292a30", "#6e7883", "#ff8170", "#1d2022", "#1c4877", "#007aff"]
+    let color = Constants.isMulticolored ? colors.random! : colors.first!
 
     router.get { _ in
         return "Battlesnake"
@@ -148,7 +133,7 @@ public func routes(_ router: Router) throws {
         // make better future decisions ie dont get stuck in corners
         
         let direction = directions.sorted { a, b in a.value > b.value }.first!.key
-        print("\(move.you.head): \(directions)")
+//        print("\(move.you.head): \(directions)")
         
         return """
 {
