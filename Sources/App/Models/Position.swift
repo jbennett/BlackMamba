@@ -7,7 +7,7 @@
 
 import Vapor
 
-struct Position: Content, Equatable {
+struct Position: Content, Equatable, Hashable {
     let x: Int
     let y: Int
     

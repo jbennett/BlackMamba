@@ -17,11 +17,16 @@ struct Snake: Content {
         body.first!
     }
     
+    var length: Int {
+        body.count
+    }
+    
     var adjacentPositions: [Position] {
         return head.adjacentPositions
     }
     
     func covers(_ position: Position) -> Bool {
+        // don't remove the first position (head of snake) since that position will be a body by the time we take our turn
         return body.contains(position)
     }
     

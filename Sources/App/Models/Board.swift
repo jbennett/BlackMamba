@@ -14,14 +14,11 @@ struct Board: Content {
     let food: [Position]
     let snakes: [Snake]
     
+    func isAvailable(_ position: Position) -> Bool {
+        return isValid(position) && isPositionClear(position)
+    }
+    
     func isPositionClear(_ position: Position) -> Bool {
-        if position.x < 0 ||
-            position.x > width - 1 ||
-            position.y < 0 ||
-            position.y > height - 1 {
-             return false
-        }
-        
         for snake in snakes {
             if snake.covers(position) {
                 return false
@@ -29,5 +26,12 @@ struct Board: Content {
         }
         
         return true
+    }
+    
+    func isValid(_ position: Position) -> Bool {
+        return position.x >= 0 &&
+        position.x < width &&
+        position.y >= 0 &&
+        position.y < height
     }
 }
