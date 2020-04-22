@@ -32,7 +32,7 @@ struct Position: Content, Equatable, Hashable {
     
     
     func distanceSquared(to other: Position) -> Int {
-        return (x - other.x) ^ 2 + (y - other.y) ^ 2
+        return ((x - other.x) ** 2) + ((y - other.y) ** 2)
     }
     
     func directionsTowards(_ position: Position) -> [Direction] {
@@ -56,4 +56,11 @@ struct Position: Content, Equatable, Hashable {
         
         return directions
     }
+}
+
+/// utilities
+precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
+infix operator ** : PowerPrecedence
+func **(radix: Int, power: Int) -> Int {
+    return Int(pow(Double(radix), Double(power)))
 }
