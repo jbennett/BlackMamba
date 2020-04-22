@@ -32,11 +32,10 @@ public func routes(_ router: Router) throws {
         directions += avoidWalls(snake: move.you, board: move.board)
         directions += avoidSnakeBodies(snake: move.you, board: move.board)
         directions += avoidSnakeHeads(snake: move.you, board: move.board)
+        // attack short snakes
         directions += seekFood(snake: move.you, board: move.board)
         directions += avoidDeadEnds(snake: move.you, board: move.board)
-        
-        // eat shorter adjacent snakes
-        // make better future decisions ie dont get stuck in corners
+        directions += chaseTail(snake: move.you, board: move.board)
         
 //        logger("\(move.you.head): \(directions)")
         return """
@@ -46,7 +45,8 @@ public func routes(_ router: Router) throws {
 """
     }
 
-    router.post("/end") { _ in
+    router.post("/end") { req -> String in
+//        print("ended Game\n")
         return "ok\n"
     }
 }
@@ -121,6 +121,10 @@ func avoidSnakeHeads(snake: Snake, board: Board) -> DirectionSet {
 func seekFood(snake: Snake, board: Board) -> DirectionSet {
     var directions = DirectionSet()
     
+    // do i need food?
+    // how far away should I go for
+    // if my health is good i should suggest
+    
     let closestFood = board.food.reduce(board.food.first!) { closest, current in
         let closestDistance = closest.distanceSquared(to: snake.head)
         let currentDistance = current.distanceSquared(to: snake.head)
@@ -194,4 +198,16 @@ func availableMovesScore(starting: Position, board: Board, currentDepth: Int = 1
     let nextDepthValue = availablePositions.map { availableMovesScore(starting: $0, board: board, currentDepth: currentDepth + 1) }.reduce(0, { $0 + $1 })
     
     return currentDepthValue + nextDepthValue
+}
+
+func chaseTail(snake me: Snake, board: Board) -> DirectionSet {
+    var directions = DirectionSet()
+    guard me.health > 50 else { return directions }
+    guard me.length > 10 else { return directions }
+    // length should be competative with other snakes? 80% of others?
+    
+    // target the location of the tail for the next round
+    me.head.directionsTowards(me.futureTail).forEach { directions.add(Constants.seekTail, $0) }
+    
+    return directions
 }

@@ -10,9 +10,10 @@ enum Constants {
 
     static let avoidWalls = 100000
     static let avoidSnakeBodies = 100000
-    static let avoidSnakeHeads = 500
+    static let avoidSnakeHeads = 1000
     static let moveBias = 20 // 5 moves trumps a food?
     static let foodSeeking = 100
+    static let seekTail = 150
     
     
     static var isMulticolored: Bool = {

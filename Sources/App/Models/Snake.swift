@@ -17,6 +17,14 @@ struct Snake: Content {
         body.first!
     }
     
+    var tail: Position {
+        body.last!
+    }
+    
+    var futureTail: Position {
+        return body[body.count - 2]
+    }
+    
     var length: Int {
         body.count
     }
