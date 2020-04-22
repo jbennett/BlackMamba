@@ -33,9 +33,13 @@ struct Snake: Content {
         return head.adjacentPositions
     }
     
-    func covers(_ position: Position) -> Bool {
+    func covers(_ position: Position, ignoringLastTail: Bool = false) -> Bool {
         // don't remove the first position (head of snake) since that position will be a body by the time we take our turn
-        return body.contains(position)
+        // optionally remove the end of the tail since it will have moved by the time we take a turn
+        // TODO: unless they eat food
+        let effectiveBody = ignoringLastTail ? body.dropLast() : body
+        
+        return effectiveBody.contains(position)
     }
     
     func isApproaching(_ position: Position) -> Bool {

@@ -70,18 +70,20 @@ func avoidSnakeBodies(snake: Snake, board: Board) -> DirectionSet {
     let down = snake.head.go(.down)
     let left = snake.head.go(.left)
     let right = snake.head.go(.right)
+    
+    let ignoreEndOfTail = true // TODO: only if not at food…
         
     for enemy in board.snakes {
-        if (enemy.covers(up)) {
+        if (enemy.covers(up, ignoringLastTail: ignoreEndOfTail)) {
             directions.subtract(Constants.avoidSnakeBodies, .up)
         }
-        if (enemy.covers(down)) {
+        if (enemy.covers(down, ignoringLastTail: ignoreEndOfTail)) {
             directions.subtract(Constants.avoidSnakeBodies, .down)
         }
-        if (enemy.covers(left)) {
+        if (enemy.covers(left, ignoringLastTail: ignoreEndOfTail)) {
             directions.subtract(Constants.avoidSnakeBodies, .left)
         }
-        if (enemy.covers(right)) {
+        if (enemy.covers(right, ignoringLastTail: ignoreEndOfTail)) {
             directions.subtract(Constants.avoidSnakeBodies, .right)
         }
     }
