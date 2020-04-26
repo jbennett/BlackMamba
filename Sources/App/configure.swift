@@ -1,4 +1,5 @@
 import FluentSQLite
+import Leaf
 import Vapor
 
 /// Called before your application initializes.
@@ -17,6 +18,9 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
 //    middlewares.use(EchoMiddleware())
     services.register(middlewares)
+    try services.register(LeafProvider())
+    config.prefer(LeafRenderer.self, for: ViewRenderer.self)
+
 
     // Configure a SQLite database
     let sqlite = try SQLiteDatabase(storage: .memory)

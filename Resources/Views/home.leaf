@@ -1,0 +1,7 @@
+Hello World of Battlesnake-ers.
+
+This is #(name)!
+
+#if(1 + 1 == 2) {
+    Hello!
+}
